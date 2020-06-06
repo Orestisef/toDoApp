@@ -20,7 +20,7 @@ class ReactToDoBlock extends BlockBase {
     public function build() {
       $build = [];
       $build['react_todo_block'] = [
-        '#markup' => '<div id="react-app"></div>',
+        '#markup' => '<div id="container"></div>',
         '#attached' => [
           'library' => 'react_todo/react-todo'
         ],

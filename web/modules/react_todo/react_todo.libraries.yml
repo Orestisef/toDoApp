@@ -1,0 +1,3 @@
+react-todo:
+  js:
+    js/dist/main.js: { preprocess: false }
