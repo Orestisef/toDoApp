@@ -47,9 +47,6 @@ class App extends React.Component {
   
 
     componentDidMount() {
-    fetch('/my-api/post.json')
-        .then(response => response.json());
-
      fetch('/my-api/get.json')
       .then(response => response.json())
       .then(data => this.setState( {tasks: data}));
@@ -57,6 +54,13 @@ class App extends React.Component {
   
     handleSubmit = task => {
       //this.setState({tasks: [...this.state.tasks, task]});
+
+      const requestOptions = {
+        method: 'POST',
+        header: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: 'React POST Request Example' })
+      };
+      fetch('/my-api/post.json', requestOptions);
     }
     
     handleDelete = (index) => {

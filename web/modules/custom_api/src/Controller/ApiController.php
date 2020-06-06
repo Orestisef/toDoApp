@@ -49,6 +49,11 @@ class ApiController extends ControllerBase {
    */
   public function post_example( Request $request ) {
 
+    if ( 0 === strpos( $request->headers->get( 'Content-Type' ), 'application/json' ) ) {
+      $data = json_decode( $request->getContent(), TRUE );
+      $request->request->replace( is_array( $data ) ? $data : [] );
+    }
+
     $node = $this->entityTypeManager()->getStorage('node')->create(['type' => 'article', 'title' => 'hello']);
     $node->save();
     //$response[] = $node->toArray();
