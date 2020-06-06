@@ -42,11 +42,21 @@ import ReactDOM from "react-dom";
 
 class App extends React.Component {
     state = {
-      tasks: ['task 1', 'task 2', 'task 3']
+      tasks: []
     };
   
+
+    componentDidMount() {
+    fetch('/my-api/post.json')
+        .then(response => response.json());
+
+     fetch('/my-api/get.json')
+      .then(response => response.json())
+      .then(data => this.setState( {tasks: data}));
+    }
+  
     handleSubmit = task => {
-      this.setState({tasks: [...this.state.tasks, task]});
+      //this.setState({tasks: [...this.state.tasks, task]});
     }
     
     handleDelete = (index) => {
@@ -108,8 +118,9 @@ class App extends React.Component {
   
   
   const TodoList = (props) => {
+    console.log(props);
     const todos = props.tasks.map((todo, index) => {
-      return <Todo content={todo} key={index} id={index} onDelete={props.onDelete} />
+      return <Todo content={{...todo}} key={index} id={index} onDelete={props.onDelete} />
     })
     return( 
       <div className='list-wrapper'>
@@ -119,9 +130,10 @@ class App extends React.Component {
   }
   
   const Todo = (props) => {
+    console.log(props.content);
     return(
       <div className='list-item'>
-        {props.content}
+        {props.content.title[0].value}
         <button class="delete is-pulled-right" onClick={() => {props.onDelete(props.id)}}></button>
       </div>
     );
