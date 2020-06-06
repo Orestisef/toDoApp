@@ -1,0 +1,4 @@
+name: 'React toDo App'
+type: module
+description: 'The set up of a react app'
+core: 8.x
