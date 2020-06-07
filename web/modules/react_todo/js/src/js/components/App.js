@@ -1,44 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-// class Form extends Component {
-//   constructor() {
-//     super();
-
-//     this.state = {
-//       value: ""
-//     };
-
-//     this.handleChange = this.handleChange.bind(this);
-//   }
-
-//   handleChange(event) {
-//     const { value } = event.target;
-//     this.setState(() => {
-//       return {
-//         value
-//       };
-//     });
-//   }
-
-//   render() {
-//     return (
-//       <form>
-//         <input
-//           type="text"
-//           value={this.state.value}
-//           onChange={this.handleChange}
-//         />
-//       </form>
-//     );
-//   }
-// }
-
-// export default Form;
-
-// const wrapper = document.getElementById("container");
-// wrapper ? ReactDOM.render(<Form />, wrapper) : false;
-
 
 class App extends React.Component {
     state = {
@@ -52,13 +14,14 @@ class App extends React.Component {
       .then(data => this.setState( {tasks: data}));
     }
   
-    handleSubmit = task => {
-      //this.setState({tasks: [this.state.tasks, task]});
+    handleSubmit = taskTitle => {
+      console.log(taskTitle);
+      //this.setState({tasks: [...this.state.tasks, task]});
 
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: 'React POST Request Example' })
+        body: JSON.stringify({ title: taskTitle })
       };
       fetch('/my-api/post.json', requestOptions);
     }

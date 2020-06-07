@@ -54,7 +54,8 @@ class ApiController extends ControllerBase {
       $request->request->replace( is_array( $data ) ? $data : [] );
     }
 
-    $node = $this->entityTypeManager()->getStorage('node')->create(['type' => 'article', 'title' => 'hello']);
+    $nodeTitle = $request->get('title');
+    $node = $this->entityTypeManager()->getStorage('node')->create(['type' => 'article', 'title' => $nodeTitle]);
     $node->save();
     //$response[] = $node->toArray();
 
