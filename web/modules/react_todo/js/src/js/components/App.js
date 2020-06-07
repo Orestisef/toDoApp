@@ -53,20 +53,28 @@ class App extends React.Component {
     }
   
     handleSubmit = task => {
-      //this.setState({tasks: [...this.state.tasks, task]});
+      //this.setState({tasks: [this.state.tasks, task]});
 
       const requestOptions = {
         method: 'POST',
-        header: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: 'React POST Request Example' })
       };
       fetch('/my-api/post.json', requestOptions);
     }
     
-    handleDelete = (index) => {
+    handleDelete = (index, nodeID) => {
       const newArr = [...this.state.tasks];
       newArr.splice(index, 1);
       this.setState({tasks: newArr});
+
+      console.log(nodeID);
+      const requestOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nid: nodeID })
+      };
+      fetch('/my-api/delete.json', requestOptions);
     }
   
     render() {
@@ -122,7 +130,7 @@ class App extends React.Component {
   
   
   const TodoList = (props) => {
-    console.log(props);
+    
     const todos = props.tasks.map((todo, index) => {
       return <Todo content={{...todo}} key={index} id={index} onDelete={props.onDelete} />
     })
@@ -134,11 +142,12 @@ class App extends React.Component {
   }
   
   const Todo = (props) => {
-    console.log(props.content);
+    
     return(
       <div className='list-item'>
         {props.content.title[0].value}
-        <button class="delete is-pulled-right" onClick={() => {props.onDelete(props.id)}}></button>
+        {props.content.nid[0].value}
+        <button class="delete is-pulled-right" onClick={() => {props.onDelete(props.id, props.content.nid[0].value)}}></button>
       </div>
     );
   }

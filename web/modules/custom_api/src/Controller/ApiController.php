@@ -67,11 +67,20 @@ class ApiController extends ControllerBase {
    */
   public function delete_example( Request $request ) {
 
-    // TODO: now nodeID is static, pass it as an argument
-    $entity = $this->entityTypeManager()->getStorage('node')->load(2);
+    // $response['data'] = 'Some test data to return';
+    // $response['method'] = 'DELETE';
+
+    if ( 0 === strpos( $request->headers->get( 'Content-Type' ), 'application/json' ) ) {
+      $data = json_decode( $request->getContent(), TRUE );
+      $request->request->replace( is_array( $data ) ? $data : [] );
+    }
+
+    $nodeID = $request->get('nid');
+    
+    $entity = $this->entityTypeManager()->getStorage('node')->load($nodeID);
     $entity->delete();
 
-    return new JsonResponse( $response );
+    return new JsonResponse( $request );
   }
 
 }
