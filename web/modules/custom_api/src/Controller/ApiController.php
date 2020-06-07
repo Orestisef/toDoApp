@@ -57,8 +57,13 @@ class ApiController extends ControllerBase {
     $nodeTitle = $request->get('title');
     $node = $this->entityTypeManager()->getStorage('node')->create(['type' => 'article', 'title' => $nodeTitle]);
     $node->save();
-    //$response[] = $node->toArray();
 
+    //get again
+    $response = array();
+    $nodes = $this->entityTypeManager()->getStorage('node')->loadMultiple();
+    foreach ($nodes as $node) {
+        $response[] = $node->toArray();
+    }
 
     return new JsonResponse( $response );
   }

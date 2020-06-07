@@ -16,14 +16,16 @@ class App extends React.Component {
   
     handleSubmit = taskTitle => {
       console.log(taskTitle);
-      //this.setState({tasks: [...this.state.tasks, task]});
+      //this.setState({tasks: [...this.state.tasks]});
 
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: taskTitle })
       };
-      fetch('/my-api/post.json', requestOptions);
+      fetch('/my-api/post.json', requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState( {tasks: data}));
     }
     
     handleDelete = (index, nodeID) => {
