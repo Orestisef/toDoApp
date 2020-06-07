@@ -41,13 +41,24 @@ class App extends React.Component {
       };
       fetch('/my-api/delete.json', requestOptions);
     }
+
+    handleComplete = (index, nodeID) => {
+      const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nid: nodeID })
+      };
+      fetch('/my-api/put.json', requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState( {tasks: data}));
+    }
   
     render() {
       return(
         <div className='wrapper'>
           <div className='card frame'>
             <Header numTodos={this.state.tasks.length} />
-            <TodoList tasks={this.state.tasks} onDelete={this.handleDelete} />
+            <TodoList tasks={this.state.tasks} onDelete={this.handleDelete} onMarkComplete={this.handleComplete}/>
             <SubmitForm onFormSubmit={this.handleSubmit} />
           </div>
         </div>
@@ -97,7 +108,7 @@ class App extends React.Component {
   const TodoList = (props) => {
     
     const todos = props.tasks.map((todo, index) => {
-      return <Todo content={{...todo}} key={index} id={index} onDelete={props.onDelete} />
+      return <Todo content={{...todo}} key={index} id={index} onDelete={props.onDelete} onMarkComplete={props.onMarkComplete} />
     })
     return( 
       <div className='list-wrapper'>
@@ -107,12 +118,19 @@ class App extends React.Component {
   }
   
   const Todo = (props) => {
-    
+
+    let isCompleted = props.content.body[0].value;
+    let text='';
+    if (isCompleted){
+      text = 'DONE: ';
+    }
+
     return(
       <div className='list-item'>
-        {props.content.title[0].value}
+        {text + props.content.title[0].value}
         {props.content.nid[0].value}
         <button class="delete is-pulled-right" onClick={() => {props.onDelete(props.id, props.content.nid[0].value)}}></button>
+        <button class="markcomplete is-pulled-right" onClick={() => {props.onMarkComplete(props.id, props.content.nid[0].value)}}></button>
       </div>
     );
   }

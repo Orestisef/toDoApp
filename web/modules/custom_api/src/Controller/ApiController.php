@@ -38,8 +38,35 @@ class ApiController extends ControllerBase {
    */
   public function put_example( Request $request ) {
 
-    $response['data'] = 'Some test data to return';
-    $response['method'] = 'PUT';
+    if ( 0 === strpos( $request->headers->get( 'Content-Type' ), 'application/json' ) ) {
+      $data = json_decode( $request->getContent(), TRUE );
+      $request->request->replace( is_array( $data ) ? $data : [] );
+    }
+
+    $nodeID = $request->get('nid');
+    $node = $this->entityTypeManager()->getStorage('node')->load($nodeID);
+
+    //get current "mark as complete" state of node.
+    $currentState = $node->get('body')->value;
+    $newState = !$currentState;
+
+    //update node with a new state
+    $node->set('body', array(
+      'value' => $newState,
+      'format' => 'basic_html'
+    ));
+
+    //and now save it
+    $node->save();
+
+    //------------------
+    //create a function to get nodes
+    $response = array();
+    $nodes = $this->entityTypeManager()->getStorage('node')->loadMultiple();
+    foreach ($nodes as $node) {
+        $response[] = $node->toArray();
+    }
+    //------------------
 
     return new JsonResponse( $response );
   }
@@ -56,6 +83,11 @@ class ApiController extends ControllerBase {
 
     $nodeTitle = $request->get('title');
     $node = $this->entityTypeManager()->getStorage('node')->create(['type' => 'article', 'title' => $nodeTitle]);
+    //set a default value for "mark as complete state"
+    $node->set('body', array(
+      'value' => FALSE,
+      'format' => 'basic_html'
+    ));
     $node->save();
 
     //get again
