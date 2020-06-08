@@ -119,16 +119,16 @@ class App extends React.Component {
   
   const Todo = (props) => {
 
-    let isCompleted = props.content.body[0].value;
-    let text='';
-    if (isCompleted){
-      text = 'DONE: ';
-    }
+    // let isCompleted = props.content.body[0].value;
+    // let text='';
+    // if (isCompleted){
+    //   text = 'DONE: ';
+    // }
 
     return(
       <div className='list-item'>
-        {text + props.content.title[0].value}
-        {props.content.nid[0].value}
+        {/* text + props.content.title[0].value */}
+        {props.content.title[0].value}
         <button class="delete is-pulled-right" onClick={() => {props.onDelete(props.id, props.content.nid[0].value)}}></button>
         <button class="markcomplete is-pulled-right" onClick={() => {props.onMarkComplete(props.id, props.content.nid[0].value)}}></button>
       </div>
