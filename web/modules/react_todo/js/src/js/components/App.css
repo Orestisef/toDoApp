@@ -1,0 +1,42 @@
+
+form {
+  display: flex;
+  padding: 10px;
+}
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(0deg, rgba(23, 62, 67, 1) 35%, rgb(53, 64, 87) 100%);
+}
+.input {
+  margin-right: 10px;
+}
+.frame {
+  width: 40vw;
+  max-width: 400px;
+  border-radius: 20px;
+}
+
+.frame-form {
+  margin-top: 2%;
+}
+
+.header {
+  display: inline;
+  text-align: center;
+  color: #01BCD4;
+}
+.list-wrapper {
+  max-height: 200px;
+  overflow-y: auto;
+}
+.check{
+  padding-right: 10px;
+}
+.items {
+  padding: 2%;
+}
+
