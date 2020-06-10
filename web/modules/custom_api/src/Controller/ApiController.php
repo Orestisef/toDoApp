@@ -20,29 +20,52 @@ use Drupal\rest\ResourceResponse;
  */
 class ApiController extends ControllerBase {
 
-  /**
-   * Callback for `my-api/get.json` API method.
-   */
-  public function get_example( Request $request ) {
-
-    $response = array();
-    $nodes = $this->entityTypeManager()->getStorage('node')->loadMultiple();
-    foreach ($nodes as $node) {
-        $response[] = $node->toArray();
-    }
-    return new JsonResponse($response);
-  }
 
   /**
-   * Callback for `my-api/put.json` API method.
-   */
-  public function put_example( Request $request ) {
-
+  * This condition checks the 'Content-Type' and makes sure 
+  * to decode JSON dtring from the request body into array
+  */
+  public function check_authentication( Request $request)
+  {
     if ( 0 === strpos( $request->headers->get( 'Content-Type' ), 'application/json' ) ) {
       $data = json_decode( $request->getContent(), TRUE );
       $request->request->replace( is_array( $data ) ? $data : [] );
     }
 
+    return $request;
+  }
+
+  /**
+   * Callback for `custom-api/get.json` API method.
+   * 
+   * This function returns a json response containing all nodes from the Drupal site.
+   */
+  public function get_nodes( Request $request ) {
+
+    $response = array();
+
+    //get entities from Drupal
+    $nodes = $this->entityTypeManager()->getStorage('node')->loadMultiple();
+
+    //crete an array and put the node inside
+    foreach ($nodes as $node) {
+        $response[] = $node->toArray();
+    }
+
+    return new JsonResponse($response);
+  }
+
+  /**
+   * Callback for `custom-api/put.json` API method.
+   * 
+   * This function changes the mark as complete state of the task.
+   * Also returns a json response containing all the nodes.
+   */
+  public function put_node( Request $request ) {
+
+    $request = $this->check_authentication($request);
+
+    //take nid value from the request
     $nodeID = $request->get('nid');
     $node = $this->entityTypeManager()->getStorage('node')->load($nodeID);
 
@@ -59,30 +82,25 @@ class ApiController extends ControllerBase {
     //and now save it
     $node->save();
 
-    //------------------
-    //create a function to get nodes
-    $response = array();
-    $nodes = $this->entityTypeManager()->getStorage('node')->loadMultiple();
-    foreach ($nodes as $node) {
-        $response[] = $node->toArray();
-    }
-    //------------------
-
-    return new JsonResponse( $response );
+    return $this->get_nodes( $request );
   }
 
   /**
-   * Callback for `my-api/post.json` API method.
+   * Callback for `custom-api/post.json` API method.
+   * 
+   * This function creates new node with type article.
+   * Also returns a json response containing all the nodes.
    */
-  public function post_example( Request $request ) {
+  public function post_node( Request $request ) {
 
-    if ( 0 === strpos( $request->headers->get( 'Content-Type' ), 'application/json' ) ) {
-      $data = json_decode( $request->getContent(), TRUE );
-      $request->request->replace( is_array( $data ) ? $data : [] );
-    }
+    $request = $this->check_authentication($request);
 
+    //take the title from request
     $nodeTitle = $request->get('title');
+
+    //create a new node of type article with a given title
     $node = $this->entityTypeManager()->getStorage('node')->create(['type' => 'article', 'title' => $nodeTitle]);
+
     //set a default value for "mark as complete state"
     $node->set('body', array(
       'value' => FALSE,
@@ -90,31 +108,23 @@ class ApiController extends ControllerBase {
     ));
     $node->save();
 
-    //get again
-    $response = array();
-    $nodes = $this->entityTypeManager()->getStorage('node')->loadMultiple();
-    foreach ($nodes as $node) {
-        $response[] = $node->toArray();
-    }
 
-    return new JsonResponse( $response );
+    return $this->get_nodes( $request );
   }
 
   /**
-   * Callback for `my-api/delete.json` API method.
+   * Callback for `custom-api/delete.json` API method.
+   * 
+   * This function deletes a node.
    */
-  public function delete_example( Request $request ) {
+  public function delete_node( Request $request ) {
 
-    // $response['data'] = 'Some test data to return';
-    // $response['method'] = 'DELETE';
+    $request = $this->check_authentication($request);
 
-    if ( 0 === strpos( $request->headers->get( 'Content-Type' ), 'application/json' ) ) {
-      $data = json_decode( $request->getContent(), TRUE );
-      $request->request->replace( is_array( $data ) ? $data : [] );
-    }
-
+    //take nid value from the request
     $nodeID = $request->get('nid');
     
+    //store the specific node and then delete it
     $entity = $this->entityTypeManager()->getStorage('node')->load($nodeID);
     $entity->delete();
 

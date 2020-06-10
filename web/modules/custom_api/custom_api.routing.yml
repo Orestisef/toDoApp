@@ -1,29 +1,29 @@
 # Custom API endpoints
 
 custom_api.get:
-  path: 'my-api/get.json'
-  defaults: { _controller: '\Drupal\custom_api\Controller\ApiController::get_example' }
+  path: 'custom-api/get.json'
+  defaults: { _controller: '\Drupal\custom_api\Controller\ApiController::get_nodes' }
   methods:  [GET]
   requirements:
     _access: 'TRUE'
 
 custom_api.put:
-  path: 'my-api/put.json'
-  defaults: { _controller: '\Drupal\custom_api\Controller\ApiController::put_example' }
+  path: 'custom-api/put.json'
+  defaults: { _controller: '\Drupal\custom_api\Controller\ApiController::put_node' }
   methods:  [PUT]
   requirements:
     _access: 'TRUE'
 
 custom_api.post:
-  path: 'my-api/post.json'
-  defaults: { _controller: '\Drupal\custom_api\Controller\ApiController::post_example' }
+  path: 'custom-api/post.json'
+  defaults: { _controller: '\Drupal\custom_api\Controller\ApiController::post_node' }
   methods:  [POST]
   requirements:
     _access: 'TRUE'
 
 custom_api.delete:
-  path: 'my-api/delete.json'
-  defaults: { _controller: '\Drupal\custom_api\Controller\ApiController::delete_example' }
+  path: 'custom-api/delete.json'
+  defaults: { _controller: '\Drupal\custom_api\Controller\ApiController::delete_node' }
   methods:  [DELETE]
   requirements:
     _access: 'TRUE'

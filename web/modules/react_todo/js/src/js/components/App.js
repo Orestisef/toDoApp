@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+
 import Header from "./Header";
 import TodoList from "./TodoList";
 import SubmitForm from "./SubmitForm";
 
 import 'bulma/css/bulma.min.css';
-
 import "./App.css";
 
 
@@ -16,7 +16,7 @@ class App extends React.Component {
 
 
   componentDidMount() {
-   fetch('/my-api/get.json')
+   fetch('/custom-api/get.json')
     .then(response => response.json())
     .then(data => this.setState( {tasks: data}));
   }
@@ -30,7 +30,7 @@ class App extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: taskTitle })
     };
-    fetch('/my-api/post.json', requestOptions)
+    fetch('/custom-api/post.json', requestOptions)
     .then(response => response.json())
     .then(data => this.setState( {tasks: data}));
   }
@@ -46,7 +46,7 @@ class App extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nid: nodeID })
     };
-    fetch('/my-api/delete.json', requestOptions);
+    fetch('/custom-api/delete.json', requestOptions);
   }
 
   handleComplete = (index, nodeID) => {
@@ -55,7 +55,7 @@ class App extends React.Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nid: nodeID })
     };
-    fetch('/my-api/put.json', requestOptions)
+    fetch('/custom-api/put.json', requestOptions)
     .then(response => response.json())
     .then(data => this.setState( {tasks: data}));
   }
