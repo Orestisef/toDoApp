@@ -14,16 +14,15 @@ class App extends React.Component {
     tasks: []
   };
 
-
+  //-------Lifecycle Methode -----//
   componentDidMount() {
    fetch('/custom-api/get.json')
     .then(response => response.json())
     .then(data => this.setState( {tasks: data}));
   }
 
+  //----- Actions Handlers --------//
   handleSubmit = taskTitle => {
-    console.log(taskTitle);
-    //this.setState({tasks: [...this.state.tasks]});
 
     const requestOptions = {
       method: 'POST',
@@ -34,6 +33,7 @@ class App extends React.Component {
     .then(response => response.json())
     .then(data => this.setState( {tasks: data}));
   }
+
   
   handleDelete = (index, nodeID) => {
     const newArr = [...this.state.tasks];
@@ -49,6 +49,7 @@ class App extends React.Component {
     fetch('/custom-api/delete.json', requestOptions);
   }
 
+  
   handleComplete = (index, nodeID) => {
     const requestOptions = {
       method: 'PUT',
@@ -60,6 +61,7 @@ class App extends React.Component {
     .then(data => this.setState( {tasks: data}));
   }
 
+  //--------- Render -------------//
   render() {
     return(
       <div className='wrapper'>

@@ -11,8 +11,8 @@ const Todo = (props) => {
   
     return(
       <div className='list-item items'>
-        {/* text + props.content.title[0].value */}
         <label class="checkbox check" onClick={() => {props.onMarkComplete(props.id, props.content.nid[0].value)}}><input type="checkbox" /></label>
+        {/* text + props.content.title[0].value */}
         {props.content.title[0].value}
         <button class="delete is-pulled-right" onClick={() => {props.onDelete(props.id, props.content.nid[0].value)}}></button>
       </div>
