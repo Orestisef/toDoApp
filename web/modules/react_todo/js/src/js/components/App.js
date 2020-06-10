@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import Header from "./Header";
+import TodoList from "./TodoList";
+import SubmitForm from "./SubmitForm";
+
 import 'bulma/css/bulma.min.css';
 
-import styles from "./App.css";
+import "./App.css";
 
 
 class App extends React.Component {
@@ -72,85 +76,9 @@ class App extends React.Component {
 }
 
 
-class SubmitForm extends React.Component {
-  state = { term: '' };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    if(this.state.term === '') return;
-    this.props.onFormSubmit(this.state.term);
-    this.setState({ term: '' });
-  }
-
-  render() {
-    return(
-      <form onSubmit={this.handleSubmit}>
-        <input 
-          type='text'
-          className='input'
-          placeholder='Enter Item'
-          value={this.state.term}
-          onChange={(e) => this.setState({term: e.target.value})}
-        />
-        <button className='button'>Submit</button>
-      </form>
-    );
-  }
-}
-
-
-const Header = (props) => {
-  return(
-    <div className='card-header'>
-      <h1 className='card-header-title header'>
-        {props.numTodos} Todos
-      </h1>
-    </div>
-  )
-}
-
-
-const TodoList = (props) => {
-  
-  const todos = props.tasks.map((todo, index) => {
-    return <Todo content={{...todo}} key={index} id={index} onDelete={props.onDelete} onMarkComplete={props.onMarkComplete} />
-  })
-  return( 
-    <div className='list-wrapper'>
-      {todos}
-    </div>
-  );
-}
-
-const Todo = (props) => {
-
-  // let isCompleted = props.content.body[0].value;
-  // let text='';
-  // if (isCompleted){
-  //   text = 'DONE: ';
-  // }
-
-  return(
-    <div className='list-item items'>
-      {/* text + props.content.title[0].value */}
-      <label class="checkbox check" onClick={() => {props.onMarkComplete(props.id, props.content.nid[0].value)}}><input type="checkbox" /></label>
-      {props.content.title[0].value}
-      <button class="delete is-pulled-right" onClick={() => {props.onDelete(props.id, props.content.nid[0].value)}}></button>
-    </div>
-  );
-}
-
-//   ReactDOM.render(
-//     <App />,
-//     document.querySelector('#root')
-//   );
 
 export default App;
 
 const wrapper = document.getElementById("container");
 wrapper ? ReactDOM.render(<App />, wrapper) : false;
 
-// balck (23, 62, 67)
-// blue (63, 176, 172)
-// yellow (250, 229, 150)
-// white (221, 223, 212)

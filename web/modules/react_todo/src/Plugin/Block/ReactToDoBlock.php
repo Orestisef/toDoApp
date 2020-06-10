@@ -1,4 +1,7 @@
 <?php 
+/**
+ * We use this block to render the React application 
+*/
 
 namespace Drupal\react_todo\Plugin\Block;
 
@@ -17,13 +20,15 @@ class ReactToDoBlock extends BlockBase {
     /**
      * {@inheritdoc}
      */
+
+    // is returning a render array with the attached library
     public function build() {
       $build = [];
       $build['react_todo_block'] = [
         '#markup' => '<div id="container"></div>',
         '#attached' => [
-          'library' => 'react_todo/react-todo'
-        ],
+          'library' => 'react_todo/react-todo' 
+        ]
       ];
   
       return $build;
