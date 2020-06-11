@@ -2,7 +2,7 @@
 
 1. Git clone this repo
 2. Create a database with `utf8_general_ci` format. Remember the db credentials (dbname username password)
-3. Copy `web\sites\example.setting.php` to `web\sites\default\setting.php`.
+3. Copy `web\sites\example.setting.local.php` to `web\sites\default\setting.local.php`.
 4. Copy the following to the end of the file.
 
 ```
