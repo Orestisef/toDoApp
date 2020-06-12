@@ -22,3 +22,4 @@
 7. Load page. Make sure to load the web folder otherwise the page won't be loaded successfully.
     If everything is fine you will see the following..
     
+    ![alt text](https://github.com/Orestisef/toDoApp/blob/master/intro.png "Intro" ) 
