@@ -33,10 +33,40 @@ form {
   max-height: 200px;
   overflow-y: auto;
 }
-.check{
-  padding-right: 10px;
+
+.todo-is-completed {
+  text-decoration: line-through;
 }
+
+.checkbox-is-checked {
+  background-color: rgb(23, 62, 67);
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color .2s ease-in-out;
+  border: 1px solid #fff;
+}
+
+.checkbox:hover {
+  background: rgb(23, 62, 67);
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+
+
 .items {
   padding: 2%;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
 }
+
 

@@ -39,8 +39,7 @@ class App extends React.Component {
     const newArr = [...this.state.tasks];
     newArr.splice(index, 1);
     this.setState({tasks: newArr});
-
-    console.log(nodeID);
+    
     const requestOptions = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
