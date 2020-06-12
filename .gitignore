@@ -27,3 +27,6 @@
 
 # Ignore node_modules 
 /web/modules/react_todo/js/node_modules
+
+# Ignore DS mac files
+*/.DS_Store
