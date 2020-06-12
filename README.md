@@ -1,3 +1,14 @@
+# Description 
+
+This is a simple ToDo application using React as frontend and Drupal8 backend. 
+
+## Dependencies
+
+- Composer tool : This tool used to install the Drupal site and some dependencies.
+- Drupal8 : Use it as a Backend service.
+- custom_api module : This is a custom api module that serves as an endpoint. This is locaded in `web\modules\custom_api`
+- React toDo App module : This is a custom module to embed the React todo app on Drupal as a block.  This is locaded in `web\modules\react_todo`
+
 # How to install
 
 1. Git clone this repo
