@@ -28,7 +28,7 @@ This is a simple ToDo application using React as frontend and Drupal8 backend.
     'driver' => 'mysql',
     );
 ```
-5. Import `initial\backup-2020-06-11T19-27-40.mysql.gz` to the database.
+5. Import `initial\backup-2020-06-13T12-25-09.mysql.gz` to the database.
 6. Run `composer install`.
 7. Verify the Apache server config path shows to `\htdocs\toDoApp\web`.
 8. Restart the web services.
